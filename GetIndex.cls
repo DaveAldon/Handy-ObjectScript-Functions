@@ -6,7 +6,7 @@ Class User.Functions
   /// Output: Position integer
   /// Example: set element = GetIndex(.array, "Value"), element will = # of first found index, 0 if not found, and -1 if invalid params
   // TODO: Add support for multi-dimensional arrays
-  ClassMethod GetIndex(ByRef pArray, pFind) As %Integer {
+  CLassMethod GetIndex(ByRef pArray, pFind) As %Integer {
     try {
       // Element position init
       set tStruct=""
