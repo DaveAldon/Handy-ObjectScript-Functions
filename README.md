@@ -1,2 +1,2 @@
-# Cache-OAuth
-Using Caché as an authentication server for OAuth, in order to communicate via REST
+# The Missing Objectscript Functions
+Objectscript is a peculiar language. If you've come from more common languages like C#, Python, Javascript, etc. then it will look foreign and lacking of the same goodies that you're used to. This repo is meant to add common functions that make our lives easy, like the foreach we've all grown to love, so that you don't have to re-invent the wheel. These functions aren't without limitation, but hopefully they help in some way.
