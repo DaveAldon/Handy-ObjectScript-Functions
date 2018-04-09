@@ -5,9 +5,10 @@ Class User.Foreach
 // Example of how to use the foreach functionality
 ClassMethod SampleMethod() as %Status {
 	try {
-		set message(1) = "Hey there"
-		set message(2) = "Hey thereeee"
-		do ..Foreach($this, "Action", .message)
+		//set message = {}
+		set message(1) = "thing 1"
+		set message(2) = "thing 2"
+		do ..Foreach(.message, "Action", $this)
 	}
 	catch(e) {
 		write "SampleMethod error" _e.Name
@@ -26,8 +27,41 @@ ClassMethod Action(pMes) as %Status {
 	return $$$OK
 }
 
+ClassMethod Foreach(ByRef pVal, pFunc, pClass) As %Status {
+	try {
+		// We get the key value pairs from our dynamic object
+		set tIter = pVal.%GetIterator()
+		// Loop through these values and add to our query depending on their contents
+		while tIter.%GetNext(.key, .value) {
+			if value '= "" {
+				// We pass the value to the action
+				// TODO: Add ability to capture value and key in a friendly way
+				do $classmethod(pClass, pFunc, value)
+				//write key_"='"_value_"'",!
+			}
+		}
+	}
+	catch (e) {
+		try {
+			// Element position init
+		    set tStruct=""
+		    // Loop through the array
+		    for {
+			    set tStruct=$order(pVal(tStruct))
+			    quit:tStruct=""
+			    // Perform our action method on each element
+			    do $classmethod(pClass, pFunc, pVal(tStruct))
+			}
+		}
+		catch (e) {
+			write "Foreach error " _e.Name
+		}
+	}
+	return $$$OK
+}
+
 // Iteration over an object
-ClassMethod Foreach(pClass, pFunc, ByRef pVal) As %Status {
+ClassMethod Foreachs(ByRef pVal, pFunc, pClass) As %Status {
 	try {
 	    // Element position init
 	    set tStruct=""
@@ -36,7 +70,7 @@ ClassMethod Foreach(pClass, pFunc, ByRef pVal) As %Status {
 		    set tStruct=$order(pVal(tStruct))
 		    quit:tStruct=""
 		    // Perform our action method on each element
-		    do $CLASSMETHOD(pClass, pFunc, pVal(tStruct))
+		    do $classmethod(pClass, pFunc, pVal(tStruct))
 		}
 	}
 	catch (e) {
