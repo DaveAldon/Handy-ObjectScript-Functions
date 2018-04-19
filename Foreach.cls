@@ -46,6 +46,12 @@ ClassMethod Foreach(ByRef pVal, pFunc, pClass) As %Status {
 			do $classmethod(pClass, pFunc, value)
 			//write key_"='"_value_"'",!
 		}
+		while tIter.%GetNext(.key, .value) {
+			// We pass the value to the action
+			// TODO: Add ability to capture value and key in a friendly way
+			do $classmethod(pClass, pFunc, value)
+			//write key_"='"_value_"'",!
+		}
 	}
 	catch (e) {
 		try {
